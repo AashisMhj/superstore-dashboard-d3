@@ -1,0 +1,6 @@
+- responsive issue
+- tooltip
+- area fill on top cards
+- padding
+- common heading
+- change data to make ui nice and not crumbly

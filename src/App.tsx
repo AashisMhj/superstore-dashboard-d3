@@ -1,10 +1,9 @@
-import './index.css'
+import { RouterProvider } from "react-router";
+import "./index.css";
+import router from "./router";
 
 function App() {
-
-  return (
-    <div className="text-2xl">SuperStore Dashboard</div>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
