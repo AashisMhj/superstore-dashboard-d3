@@ -21,11 +21,11 @@ export default function DashboardPage(){
                     <CategorySalesPieChart />
                 </div>
             </div>
-            <div className="grid gap-8 grid-cols-3">
-                <div>
+            <div className="grid gap-8 grid-cols-12">
+                <div className="col-span-4">
                     <SalesProfitBarChart />
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-8">
                     <SalesChoropleth />
                 </div>
             </div>

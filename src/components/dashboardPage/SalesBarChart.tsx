@@ -103,7 +103,6 @@ export function BarChart({
       .attr("height", (d) => yScale(0) - yScale(d.sold))
       .attr("width", xScale.bandwidth())
       .on("mouseover", (evt:MouseEvent, d:{ProductName: string, sold: number}) => {
-        console.log(evt)
         setIsToolTipVisible(true);
         setToolTipContent(`
             ${d.ProductName} <br />
@@ -111,7 +110,7 @@ export function BarChart({
         setToolTipPosition({left: evt.pageX, top: evt.pageY})
       })
       .on("mouseout", function () {
-        // setIsToolTipVisible(false);
+        setIsToolTipVisible(false);
       });
   }, [data]);
   return <svg ref={svgRef} height={height} width={width}></svg>;

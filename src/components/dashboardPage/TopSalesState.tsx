@@ -14,7 +14,7 @@ export default function TopSalesState() {
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const dates = new Array(12).fill(0).map((el, i) => {
-      return new Date(`2024-${i+1}-01`);
+      return new Date(`2024-${i + 1}-01`);
     });
     const alabamaData = data.Alabama.data;
     const arizonaData = data.Arizona.data;
@@ -39,10 +39,7 @@ export default function TopSalesState() {
 
     const line = d3
       .line<number>()
-      .x((d, i) => {
-        console.log(dates[i])
-        return xScale(dates[i])
-      })
+      .x((d, i) => xScale(dates[i]))
       .y((d) => yScale(d));
 
     const svg = d3
@@ -61,7 +58,6 @@ export default function TopSalesState() {
       .attr("transform", `translate(${marginLeft}, 0)`)
       .call(d3.axisLeft(yScale));
 
-      console.log(line(data.Alabama.data))
     svg
       .append("path")
       .attr("fill", "none")
