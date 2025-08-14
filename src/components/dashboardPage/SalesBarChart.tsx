@@ -16,17 +16,20 @@ export function BarChart({
   setIsToolTipVisible: (new_value: boolean) => void;
   toolTipContent: string;
   setToolTipContent: (new_value: string) => void;
-  setToolTipPosition: (value:{top: number, left: number}) => void;
+  setToolTipPosition: (value: { top: number; left: number }) => void;
 }) {
   const height = 500;
   const width = 1400;
   const marginLeft = 40;
   const marginRight = 40;
-  const marginBottom = 80;
+  const marginBottom = 20;
   const marginTop = 40;
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+
     const xScale = d3
       .scaleBand()
       .domain(
@@ -43,11 +46,6 @@ export function BarChart({
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.sold) as number])
       .range([height - marginBottom, marginTop]);
-
-    const svg = d3
-      .select(svgRef.current)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width:100%;height:auto;");
 
     // add x-axis and label
     svg
@@ -102,18 +100,28 @@ export function BarChart({
       .attr("y", (d) => yScale(d.sold))
       .attr("height", (d) => yScale(0) - yScale(d.sold))
       .attr("width", xScale.bandwidth())
-      .on("mouseover", (evt:MouseEvent, d:{ProductName: string, sold: number}) => {
-        setIsToolTipVisible(true);
-        setToolTipContent(`
+      .on(
+        "mouseover",
+        (evt: MouseEvent, d: { ProductName: string; sold: number }) => {
+          setIsToolTipVisible(true);
+          setToolTipContent(`
             ${d.ProductName} <br />
             Sold: ${d.sold}`);
-        setToolTipPosition({left: evt.pageX, top: evt.pageY})
-      })
+          setToolTipPosition({ left: evt.pageX, top: evt.pageY });
+        }
+      )
       .on("mouseout", function () {
         setIsToolTipVisible(false);
       });
-  }, [data]);
-  return <svg ref={svgRef} height={height} width={width}></svg>;
+  }, [data, setIsToolTipVisible, setToolTipContent, setToolTipPosition]);
+  return (
+    <svg
+      ref={svgRef} className="w-full h-auto"
+      viewBox={`0 0 ${width + marginLeft + marginRight} ${
+        height + marginTop + marginBottom
+      }`}
+    ></svg>
+  );
 }
 
 export default function SalesBarChart() {
@@ -130,10 +138,12 @@ export default function SalesBarChart() {
         xPosition={position.left}
         yPosition={position.top}
       >
-        <div dangerouslySetInnerHTML={{__html: tooltipContent}} />
+        <div dangerouslySetInnerHTML={{ __html: tooltipContent }} />
       </ToolTip>
       <div className="flex gap-8 flex-col ">
-        <div>Sales Count of Products</div>
+        <h3 className="text-2xl text-secondary-600 font-bold">
+          Sales Count of Products
+        </h3>
         <BarChart
           data={data}
           isToolTipVisible={isToolTipVisible}

@@ -48,9 +48,12 @@ const dataset2 = [
 export default function CategorySalesPieChart() {
   const height = 390;
   const width = 399;
+  const margin = { top: 10, bottom: 10, left: 10, right: 10 };
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
+    const svg = d3.select(svgRef.current);
+
     const radius = Math.min(width, height) / 2;
     const innerArc = d3
       .arc<d3.PieArcDatum<{ label: string; value: number }>>()
@@ -73,11 +76,6 @@ export default function CategorySalesPieChart() {
           )
           .reverse()
       );
-
-    const svg = d3
-      .select(svgRef.current)
-      .attr("viewBox", [-width / 1, -height / 2, width, height])
-      .attr("style", "max-width:100%; height: auto;");
 
     // inner chart
     svg
@@ -134,19 +132,19 @@ export default function CategorySalesPieChart() {
           .append("title")
           .text((d) => `d${d.data.label}:${d.data.value}%`);
 
-        svg
-          .append("g")
-          .attr("text-anchor", "middle")
-          .selectAll()
-          .data(outerPie(dataset2[index]))
-          .join("text")
-          .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
-          .call((text) =>
-            text
-              .append("tspan")
-              .attr("t", "-0.4em")
-              .text((d) => d.data.label)
-          );
+        // svg
+        //   .append("g")
+        //   .attr("text-anchor", "middle")
+        //   .selectAll()
+        //   .data(outerPie(dataset2[index]))
+        //   .join("text")
+        //   .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
+        //   .call((text) =>
+        //     text
+        //       .append("tspan")
+        //       .attr("t", "-0.4em")
+        //       .text((d) => d.data.label)
+        //   );
 
         return `${d.data.label}:${d.data.value}%`;
       });
@@ -168,8 +166,18 @@ export default function CategorySalesPieChart() {
 
   return (
     <Card>
-      <h3>Top Sales</h3>
-      <svg ref={svgRef} height={height} width={width}></svg>
+      <h3 className="text-xl md:text-2xl font-bold text-secondary-600">
+        States with Top Sales
+      </h3>
+      <svg
+        ref={svgRef}
+        className="h-auto w-full"
+        viewBox={`${-(width + margin.left + margin.right) / 2} ${
+          -(height + margin.top + margin.bottom) / 2
+        } ${width + margin.left + margin.right} ${
+          height + margin.top + margin.bottom
+        }`}
+      ></svg>
     </Card>
   );
 }

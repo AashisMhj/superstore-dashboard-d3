@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import * as topojson from "topojson-client";
 import data from "../../dataset/states-sales.json";
 import us from "../../dataset/counties-albers-10m.json";
+
 const stateSalesData = data.map((el) => ({
   ...el,
   rate: parseFloat(el.rate),
@@ -11,23 +12,20 @@ const stateSalesData = data.map((el) => ({
 import Card from "../common/Card";
 
 export default function SalesChoropleth() {
-  const height = 400;
-  const width = 600;
+  const height = 610;
+  const width = 975;
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    const color = d3.scaleQuantile([1, 20], d3.schemeReds[9]);
+    const color = d3.scaleQuantile([1, 20], d3.schemeGreens[9]);
     const path = d3.geoPath();
-    const format = (d) => `${d}`;
     const valueMap = new Map(stateSalesData.map((d) => [d.id, d.rate]));
-    const countries = topojson.feature(us, us.objects.counties);
     const states = topojson.feature(us, us.objects.states);
     const stateMap = new Map(states.features.map((d) => [d.id, d]));
 
-    const stateMesh = topojson.mesh(us, us.objects.states, (a, b) => a !== b);
     const svg = d3
       .select(svgRef.current)
-      .attr("viewBox", [0, 0, 975, 610])
+      .attr("viewBox", [0, 0, 975 +80, 610 +80])
       .attr("style", "max-width: 100%; height: auto;");
 
     svg
@@ -55,8 +53,14 @@ export default function SalesChoropleth() {
   }, []);
   return (
     <Card>
-      <h3>Sales Choropleth</h3>
-      <svg ref={svgRef} height={height} width={width}></svg>
+      <h3 className="text-2xl text-secondary-600 font-bold">
+        Sales Across States
+      </h3>
+      <svg
+        ref={svgRef}
+        className="w-full"
+        viewBox={`[0, 0, ${width}, ${height}]`}
+      ></svg>
     </Card>
   );
 }

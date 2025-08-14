@@ -1,62 +1,147 @@
 [
   {
+    "date": "2023-09-01",
+    "sales": 200,
+    "profit": 20
+  },
+  {
+    "date": "2023-10-01",
+    "sales": 230,
+    "profit": 24
+  },
+  {
+    "date": "2023-11-01",
+    "sales": 230,
+    "profit": 24
+  },
+  {
+    "date": "2023-12-01",
+    "sales": 233,
+    "profit": 25
+  },
+  {
     "date": "2024-01-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 240,
+    "profit": 30
   },
   {
     "date": "2024-02-01",
-    "sales": 340,
-    "profit": 14
+    "sales": 242,
+    "profit": 31
   },
   {
     "date": "2024-03-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 241,
+    "profit": 30
   },
   {
     "date": "2024-04-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 241,
+    "profit": 30
   },
   {
     "date": "2024-05-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 242,
+    "profit": 32
   },
   {
     "date": "2024-06-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 244,
+    "profit": 33
   },
   {
     "date": "2024-07-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 246,
+    "profit": 34
   },
   {
     "date": "2024-08-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 247,
+    "profit": 35
   },
   {
     "date": "2024-09-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 248,
+    "profit": 35
   },
   {
     "date": "2024-10-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 248,
+    "profit": 35
   },
   {
     "date": "2024-11-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 249,
+    "profit": 36
   },
   {
     "date": "2024-12-01",
-    "sales": 310,
-    "profit": 12
+    "sales": 250,
+    "profit": 36
+  },
+  {
+    "date": "2025-01-01",
+    "sales": 252,
+    "profit": 36
+  },
+  {
+    "date": "2025-02-01",
+    "sales": 254,
+    "profit": 40
+  },
+  {
+    "date": "2025-03-01",
+    "sales": 253,
+    "profit": 38
+  },
+  {
+    "date": "2025-04-01",
+    "sales": 253,
+    "profit": 39
+  },
+  {
+    "date": "2025-05-01",
+    "sales": 253,
+    "profit": 40
+  },
+  {
+    "date": "2025-06-01",
+    "sales": 255,
+    "profit": 41
+  },
+  {
+    "date": "2025-07-01",
+    "sales": 256,
+    "profit": 42
+  },
+  {
+    "date": "2025-08-01",
+    "type": "Predict",
+    "sales": 257,
+    "profit": 43
+  },
+  {
+    "date": "2025-09-01",
+    "type": "Predict",
+    "sales": 259,
+    "profit": 45
+  },
+  {
+    "date": "2025-10-01",
+    "type": "Predict",
+    "sales": 261,
+    "profit": 46
+  },
+  {
+    "date": "2025-11-01",
+    "type": "Predict",
+    "sales": 262,
+    "profit": 47
+  },
+  {
+    "date": "2025-12-01",
+    "type": "Predict",
+    "sales": 263,
+    "profit": 48
   }
 ]

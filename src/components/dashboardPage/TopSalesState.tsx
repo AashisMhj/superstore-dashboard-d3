@@ -1,19 +1,21 @@
 import * as d3 from "d3";
-
+import { useEffect, useRef } from "react";
+//
 import Card from "../common/Card";
 import data from "../../dataset/top-states-sales.json";
-import { useEffect, useRef } from "react";
 
 export default function TopSalesState() {
-  const width = 900;
-  const height = 400;
+  const width = 975;
+  const height = 610;
   const marginTop = 40;
   const marginRight = 40;
   const marginBottom = 40;
   const marginLeft = 40;
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    const dates = new Array(12).fill(0).map((el, i) => {
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+    const dates = new Array(12).fill(0).map((_, i) => {
       return new Date(`2024-${i + 1}-01`);
     });
     const alabamaData = data.Alabama.data;
@@ -33,19 +35,31 @@ export default function TopSalesState() {
       width - marginRight,
     ]);
     const yScale = d3.scaleLinear(
-      [d3.min(allData), d3.max(allData)] as [number, number],
+      [(d3.min(allData) || 0) -10, d3.max(allData)] as [number, number],
       [height - marginBottom, marginTop]
     );
 
+    // horizontal lines
+    svg
+      .append("g")
+      .attr("stroke", "currentColor")
+      .attr("stroke-opacity", 0.1)
+      .call((g) =>
+        g
+          .append("g")
+          .selectAll("line")
+          .data(yScale.ticks())
+          .join("line")
+          .attr("y1", (d) => 0.5 + yScale(d))
+          .attr("y2", (d) => 0.5 + yScale(d))
+          .attr("x1", marginLeft)
+          .attr("x2", width - marginRight)
+      );
+
     const line = d3
       .line<number>()
-      .x((d, i) => xScale(dates[i]))
+      .x((_, i) => xScale(dates[i]))
       .y((d) => yScale(d));
-
-    const svg = d3
-      .select(svgRef.current)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
     // x-axis
     svg
@@ -95,10 +109,16 @@ export default function TopSalesState() {
   }, []);
   return (
     <Card>
-      <div className="">
-        <div className="pb-6">States with Top Sales</div>
-        <svg ref={svgRef} height={height} width={width}></svg>
+      <div className="text-2xl text-secondary-600 font-bold">
+        States with Top Sales
       </div>
+      <svg
+        ref={svgRef}
+        className="w-full h-full"
+        viewBox={`0 0 ${width + marginLeft + marginRight} ${
+          height + marginTop + marginBottom
+        }`}
+      ></svg>
     </Card>
   );
 }
