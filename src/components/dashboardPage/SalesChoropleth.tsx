@@ -59,7 +59,7 @@ export default function SalesChoropleth() {
       <svg
         ref={svgRef}
         className="w-full"
-        viewBox={`[0, 0, ${width}, ${height}]`}
+        viewBox={`0 0 ${width} ${height}`}
       ></svg>
     </Card>
   );

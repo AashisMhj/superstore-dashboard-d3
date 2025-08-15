@@ -53,6 +53,13 @@ export default function SalesProfitBarChart() {
 
     const color = d3.scaleOrdinal().domain(keys).range(["#34854f", "#ea730c"]);
 
+    // line generator
+    const line = d3
+      .line<{ profit: number; sales: number; date: string; cost: number }>()
+      .x((d) => xScale(d.date) || 0)
+      .y((d) => yScale(d.sales))
+      .curve(d3.curveCardinal);
+
     // draw bars
     chartArea
       .selectAll("g")
@@ -66,6 +73,30 @@ export default function SalesProfitBarChart() {
       .attr("y", (d) => yScale(d[1]))
       .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
       .attr("width", xScale.bandwidth());
+
+    // draw line with animation
+    const chart = svg.append("g").attr("transform", `translate(0,0)`);
+    const grp = chart.append("g").attr("transform", `translate(-0,-0)`);
+
+    const path = grp
+      .append("path")
+      .attr("transform", `translate(0,0)`)
+      .attr('fill', 'none')
+      .datum(stackedData)
+      .attr('class', 'stroke-blue-600')
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
+
+    const pathLength = path.node()?.getTotalLength() || 0;
+    const transitionPath = d3.transition().ease(d3.easeSin).duration(2500);
+
+    path
+      .attr("stroke-dashoffset", pathLength)
+      .attr("stroke-dasharray", pathLength)
+      .transition(transitionPath)
+      .attr("stroke-dashoffset", 0);
 
     // x-axis
     chartArea

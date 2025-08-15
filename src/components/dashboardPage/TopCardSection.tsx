@@ -1,11 +1,6 @@
 import * as d3 from "d3";
 import { useEffect, useRef, type ReactNode } from "react";
-import {
-  DollarSign,
-  Store,
-  User2Icon,
-  Warehouse,
-} from "lucide-react";
+import { DollarSign, Store, User2Icon, Warehouse } from "lucide-react";
 import clsx from "clsx";
 //
 import Card from "../common/Card";
@@ -13,13 +8,15 @@ import Card from "../common/Card";
 const iconSize = 14;
 
 function TopCardLineChart({
+  id,
   data,
   increment,
 }: {
+  id: string;
   data: Array<number>;
   increment: boolean;
 }) {
-  const height = 80;
+  const height = 85;
   const width = 324;
   const svgRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
@@ -41,7 +38,7 @@ function TopCardLineChart({
     const area = d3
       .area<number>()
       .x((_, i) => xScale(i))
-      .y0(yScale(0))
+      .y0(height)
       .y1((d) => yScale(d))
       .curve(d3.curveMonotoneX);
 
@@ -52,19 +49,46 @@ function TopCardLineChart({
       .y((d: number) => yScale(d))
       .curve(d3.curveMonotoneX);
 
+    const chart = svgElement.append("g").attr("transform", `translate(0,0)`);
+    const grp = chart.append("g").attr("transform", `translate(-0, -0)`);
+
     // draw area
-    svgElement
+    const areaPath = grp
       .append("path")
       .datum(data)
-      .attr('class', increment ? "fill-green-600/30" : "fill-red-600/30")
+      .attr("class", increment ? "fill-green-600/30" : "fill-red-600/30")
       .attr("d", area);
-    // draw path
-    svgElement
-      .append("path")
-      .attr('class', `fill-none ${increment ? "stroke-green-600" : "stroke-red-600"}`)
-      .attr("d", line(data));
 
-  }, [data, increment]);
+    // Define unique clipPath inside <defs>
+    const defs = svgElement.append("defs");
+    const clipPath = defs.append("clipPath").attr("id", `clip-area-${id}`); // id on <clipPath>, not <rect>
+
+    const clipRect = clipPath
+      .append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", 0) // start hidden
+      .attr("height", height);
+
+    const linePath = grp
+      .append("path")
+      .datum(data)
+      .attr(
+        "class",
+        `fill-none ${increment ? "stroke-green-600" : "stroke-red-600"}`
+      )
+      .attr("stroke-linejoin", "round")
+      .attr("d", line)
+      .attr("clip-path", `url(#clip-both-${id})`);
+
+    // Apply clip path to the area
+    linePath.attr("clip-path", `url(#clip-area-${id})`);
+    areaPath.attr("clip-path", `url(#clip-area-${id})`);
+
+    // Animate the clip rectangle to reveal the area
+    clipRect.transition().duration(2500).ease(d3.easeSin).attr("width", width);
+
+  }, [data, increment, id]);
   return (
     <svg
       ref={svgRef}
@@ -107,7 +131,7 @@ function TopCard({
           </div>
         </div>
       </div>
-      <TopCardLineChart data={data} increment={changeValue > 0} />
+      <TopCardLineChart id={title} data={data} increment={changeValue > 0} />
     </Card>
   );
 }
