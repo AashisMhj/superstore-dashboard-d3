@@ -101,13 +101,13 @@ export function BarChart({
       .attr("height", (d) => yScale(0) - yScale(d.sold))
       .attr("width", xScale.bandwidth())
       .on(
-        "mouseover",
+        "mousemove",
         (evt: MouseEvent, d: { ProductName: string; sold: number }) => {
           setIsToolTipVisible(true);
           setToolTipContent(`
             ${d.ProductName} <br />
             Sold: ${d.sold}`);
-          setToolTipPosition({ left: evt.pageX, top: evt.pageY });
+          setToolTipPosition({ left: evt.clientX - 60, top: evt.clientY - 120 });
         }
       )
       .on("mouseout", function () {

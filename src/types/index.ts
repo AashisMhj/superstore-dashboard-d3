@@ -21,3 +21,14 @@ export type StoreDataType = {
   Discount: string;
   Profit: string;
 };
+
+export type AggregateStatesSalesType = {
+  id: number;
+  label: string;
+  dataSum: number;
+  data: Array<number>;
+  color: string;
+  previousIndex: number;
+  highlight: boolean;
+  flag_url: string;
+};

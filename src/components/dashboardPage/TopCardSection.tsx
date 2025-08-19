@@ -141,20 +141,20 @@ export default function TopCardSection() {
       <TopCard
         icon={<DollarSign size={iconSize} />}
         title="Profit"
-        changeValue={-10}
-        data={[50, 60, 55, 65, 70, 64, 76, 67, 50, 48]}
+        changeValue={3}
+        data={[57, 60, 62, 65, 68, 64, 67, 67, 72, 74]}
       />
       <TopCard
         icon={<Store size={iconSize} />}
         title="Sales"
-        changeValue={30}
+        changeValue={3}
         data={[104, 115, 110, 112, 134, 145, 147, 149, 150, 153]}
       />
       <TopCard
         icon={<User2Icon size={iconSize} />}
         title="Users"
         changeValue={-20}
-        data={[100, 110, 107, 94, 92, 94, 98, 103, 99, 94]}
+        data={[106, 108, 112, 112, 112, 113, 110, 110, 108, 108]}
       />
       <TopCard
         icon={<Warehouse size={iconSize} />}

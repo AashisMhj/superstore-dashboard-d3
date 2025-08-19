@@ -1,87 +1,32 @@
 {
-    "Texas": {
-        "label": "Texas",
-        "data": [
-            234,
-            256,
-            264,
-            268,
-            268,
-            268,
-            270,
-            273,
-            273,
-            274,
-            275,
-            275
-        ]
-    },
-    "California": {
-        "label": "California",
-        "data": [
-            210,
-            213,
-            220,
-            218,
-            216,
-            214,
-            212,
-            210,
-            210,
-            210,
-            202,
-            202
-        ]
-    },
-    "NewYork": {
-        "label": "New York",
-        "data": [
-            298,
-            305,
-            306,
-            308,
-            310,
-            309,
-            310,
-            311,
-            313,
-            315,
-            315,
-            318
-        ]
-    },
-    "Arizona": {
-        "label": "Arizona",
-        "data": [
-            198,
-            205,
-            208,
-            210,
-            213,
-            218,
-            225,
-            230,
-            234,
-            232,
-            232,
-            234
-        ]
-    },
-    "Alabama": {
-        "label": "Alabama",
-        "data": [
-            234,
-            246,
-            255,
-            269,
-            282,
-            293,
-            302,
-            305,
-            309,
-            312,
-            310,
-            302
-        ]
-    }
+  "Texas": {
+    "label": "Texas",
+    "data": [234, 256, 264, 268, 268, 268, 270, 273, 273, 274, 275, 275],
+    "color": "#1C2040",
+    "flag_url": "https://cdn11.bigcommerce.com/s-w6fxwapwzi/images/stencil/300x300/products/2986/8673/Poly-Max-Texas-Flag-Sewn-Version__45503.1742931256.jpg?c=1"
+  },
+  "California": {
+    "label": "California",
+    "data": [210, 213, 220, 218, 216, 214, 212, 210, 210, 210, 202, 202],
+    "color": "#01013A",
+    "flag_url": "https://cdn11.bigcommerce.com/s-w6fxwapwzi/images/stencil/300x300/products/2013/4108/2x3-california-flag-image__69205.1582662792.jpg?c=1"
+  },
+  "NewYork": {
+    "label": "New York",
+    "data": [298, 305, 306, 308, 310, 309, 310, 311, 313, 315, 315, 318],
+    "color": "#0198D9",
+    "flag_url": "https://cdn11.bigcommerce.com/s-w6fxwapwzi/images/stencil/300x300/products/2167/4443/2x3-new-york-flag-image__77086.1582663399.jpg?c=1"
+  },
+  "Arizona": {
+    "label": "Arizona",
+    "data": [198, 205, 208, 210, 213, 218, 225, 230, 234, 232, 232, 234],
+    "color": "#AF122A",
+    "flag_url": "https://cdn11.bigcommerce.com/s-w6fxwapwzi/images/stencil/300x300/products/2119/4335/2x3-arizona-flag-image__41857.1582663233.jpg?c=1"
+  },
+  "Alabama": {
+    "label": "Alabama",
+    "data": [234, 246, 255, 269, 282, 293, 302, 305, 309, 312, 310, 302],
+    "color": "#9B6029",
+    "flag_url": "https://cdn11.bigcommerce.com/s-w6fxwapwzi/images/stencil/300x300/products/1989/4054/2x3-alabama-flag-image__06617.1582662708.jpg?c=1"
+  }
 }

@@ -35,7 +35,7 @@ export default function TopSalesState() {
       width - marginRight,
     ]);
     const yScale = d3.scaleLinear(
-      [(d3.min(allData) || 0) -10, d3.max(allData)] as [number, number],
+      [(d3.min(allData) || 0) - 10, d3.max(allData)] as [number, number],
       [height - marginBottom, marginTop]
     );
 
@@ -67,45 +67,54 @@ export default function TopSalesState() {
       .attr("transform", `translate(0, ${height - marginBottom})`)
       .call(d3.axisBottom(xScale));
 
+    // y-axis
     svg
       .append("g")
       .attr("transform", `translate(${marginLeft}, 0)`)
       .call(d3.axisLeft(yScale));
 
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "green")
-      .attr("stroke-width", 1.5)
-      .attr("d", line(data.Alabama.data));
+    const states = [
+      "Alabama",
+      "Arizona",
+      "California",
+      "NewYork",
+      "Texas",
+    ] as Array<keyof typeof data>;
+    const color = d3
+      .scaleOrdinal()
+      .domain(states)
+      .range(["red", "blue", "green", "purple", "orange"]);
 
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "red")
-      .attr("stroke-width", 1.5)
-      .attr("d", line(data.Arizona.data));
+    states.forEach((el) => {
+      svg
+        .append("path")
+        .attr("fill", "none")
+        .attr("stroke", color(el) as string)
+        .attr("stroke-width", 1.5)
+        .attr("d", line(data[el].data));
 
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "blue")
-      .attr("stroke-width", 1.5)
-      .attr("d", line(data.California.data));
+      svg
+        .selectAll(`.circle-${el}`)
+        .data(data[el].data)
+        .join("circle")
+        .attr("cx", (_, i) => xScale(dates[i]))
+        .attr("cy", (d) => yScale(d))
+        .attr("r", 4)
+        .attr("fill", color(el) as string)
+        .attr("stroke", "green")
+        .attr("stroke-width", 1);
 
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "purple")
-      .attr("stroke-width", 1.5)
-      .attr("d", line(data.NewYork.data));
-
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "teal")
-      .attr("stroke-width", 1.5)
-      .attr("d", line(data.Texas.data));
+      const lastIndex = data[el].data.length - 1;
+      const lastPoint = data[el].data[lastIndex];
+      svg
+        .append("text")
+        .attr("x", xScale(dates[lastIndex]) + 5) // slightly to the right
+        .attr("y", yScale(lastPoint))
+        .text(el)
+        .attr("fill", color(el) as string)
+        .attr("font-size", 16)
+        .attr("alignment-baseline", "middle");
+    });
   }, []);
   return (
     <Card>

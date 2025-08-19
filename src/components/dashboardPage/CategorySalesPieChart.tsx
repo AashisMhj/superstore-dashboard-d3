@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 import Card from "../common/Card";
+import ToolTip from "../common/ToolTip";
 
 const dataset1 = [
   {
@@ -50,6 +51,12 @@ export default function CategorySalesPieChart() {
   const width = 399;
   const margin = { top: 10, bottom: 10, left: 10, right: 10 };
   const svgRef = useRef<SVGSVGElement>(null);
+  const [isToolTipVisible, setIsToolTipVisible] = useState(false);
+  const [toolTipContent, setToolTipContent] = useState("");
+  const [toolTipPosition, setToolTipPosition] = useState({
+    left: 0,
+    top: 0,
+  });
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -85,6 +92,21 @@ export default function CategorySalesPieChart() {
       .join("path")
       .attr("fill", (d) => innerColor(d.data.label) as string)
       .attr("d", innerArc)
+      .on("mousemove", (evt: MouseEvent, d) => {
+        const SubData = dataset2[d.index];
+        console.log(SubData)
+        setToolTipContent(`
+          <div>${d.data.label}: ${d.data.value}</div>
+          <hr style="background-color: white;" />
+          ${SubData.map((el) => `<div>${el.label}: ${el.value}</div>`)}
+          `);
+
+        setToolTipPosition({ left: evt.clientX - 200, top: evt.clientY - 100 });
+        setIsToolTipVisible(true);
+      })
+      .on("mouseout", () => {
+        setIsToolTipVisible(false);
+      })
       .append("title")
       .text((d, index) => {
         // TODO: separate this to another function
@@ -132,22 +154,9 @@ export default function CategorySalesPieChart() {
           .append("title")
           .text((d) => `d${d.data.label}:${d.data.value}%`);
 
-        // svg
-        //   .append("g")
-        //   .attr("text-anchor", "middle")
-        //   .selectAll()
-        //   .data(outerPie(dataset2[index]))
-        //   .join("text")
-        //   .attr("transform", (d) => `translate(${outerArc.centroid(d)})`)
-        //   .call((text) =>
-        //     text
-        //       .append("tspan")
-        //       .attr("t", "-0.4em")
-        //       .text((d) => d.data.label)
-        //   );
-
         return `${d.data.label}:${d.data.value}%`;
       });
+
     // inner chart text
     svg
       .append("g")
@@ -165,19 +174,29 @@ export default function CategorySalesPieChart() {
   }, []);
 
   return (
-    <Card>
-      <h3 className="text-xl md:text-2xl font-bold text-secondary-600">
-        States with Top Sales
-      </h3>
-      <svg
-        ref={svgRef}
-        className="h-auto w-full"
-        viewBox={`${-(width + margin.left + margin.right) / 2} ${
-          -(height + margin.top + margin.bottom) / 2
-        } ${width + margin.left + margin.right} ${
-          height + margin.top + margin.bottom
-        }`}
-      ></svg>
-    </Card>
+    <>
+      <Card>
+        <h3 className="text-xl md:text-2xl font-bold text-secondary-600">
+          States with Top Sales
+        </h3>
+        <svg
+          ref={svgRef}
+          className="h-auto w-full"
+          viewBox={`${-(width + margin.left + margin.right) / 2} ${
+            -(height + margin.top + margin.bottom) / 2
+          } ${width + margin.left + margin.right} ${
+            height + margin.top + margin.bottom
+          }`}
+        ></svg>
+      </Card>
+      <ToolTip
+        isVisible={isToolTipVisible}
+        xPosition={toolTipPosition.left}
+        yPosition={toolTipPosition.top}
+        arrowPosition="right"
+      >
+        <div dangerouslySetInnerHTML={{ __html: toolTipContent }} />
+      </ToolTip>
+    </>
   );
 }
