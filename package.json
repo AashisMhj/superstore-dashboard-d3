@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/AashisMhj/superstore-dashboard-d3",
+  "homepage": "https://AashisMhj.github.io/superstore-dashboard-d3",
   "scripts": {
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist",
